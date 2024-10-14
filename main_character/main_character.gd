@@ -27,7 +27,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 func _process(delta):
-	if Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left"ad):
+	if Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left"):
 		animations.play("correr")
 	else:
 		animations.play("iddle")
