@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b88ootqjursfl"]
+[gd_scene load_steps=13 format=3 uid="uid://b88ootqjursfl"]
 
 [ext_resource type="Script" path="res://scenes/menu/menu.gd" id="1_e1xyn"]
 [ext_resource type="Texture2D" uid="uid://buitpik1a7nnn" path="res://scenes/menu/images/FONDO MAINMENU.png" id="2_6lqse"]
@@ -11,6 +11,42 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8eds5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pi5kn"]
+
+[sub_resource type="Animation" id="Animation_2kys3"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mdlml"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_srkfi"]
+_data = {
+"RESET": SubResource("Animation_mdlml"),
+"fade_out": SubResource("Animation_2kys3")
+}
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -72,7 +108,10 @@ alignment = 2
 [node name="Hover" type="AudioStreamPlayer" parent="VBoxContainer"]
 stream = ExtResource("4_3ulmk")
 
-[node name="Escoger" type="AudioStreamPlayer" parent="VBoxContainer"]
+[node name="Start" type="AudioStreamPlayer" parent="VBoxContainer"]
+stream = ExtResource("5_jlfba")
+
+[node name="Quit" type="AudioStreamPlayer" parent="VBoxContainer"]
 stream = ExtResource("5_jlfba")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
@@ -80,8 +119,24 @@ stream = ExtResource("6_8en0n")
 volume_db = -15.5
 script = ExtResource("7_vks7d")
 
+[node name="FadeOut" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="FadeOut"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FadeOut"]
+libraries = {
+"": SubResource("AnimationLibrary_srkfi")
+}
+
 [connection signal="mouse_entered" from="VBoxContainer/StartButton" to="." method="_on_start_button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
-[connection signal="finished" from="VBoxContainer/Escoger" to="." method="_on_escoger_finished"]
+[connection signal="finished" from="VBoxContainer/Quit" to="." method="_on_quit_finished"]
