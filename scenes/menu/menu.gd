@@ -16,7 +16,7 @@ func _on_start_button_pressed():
 	var fade_out_options = SceneManager.create_options(1.0, "fade", 0.2, true)
 	var fade_in_options = SceneManager.create_options(1.0, "crooked_tiles", 0.2, true)
 	var general_options = SceneManager.create_general_options(Color(0, 0, 0), 0, false, true)
-	SceneManager.change_scene("level1", fade_out_options, fade_in_options, general_options)
+	SceneManager.change_scene("test", fade_out_options, fade_in_options, general_options)
 
 
 func _on_quit_button_pressed():
